@@ -35,7 +35,7 @@ spec:
     CREDS = credentials('reab-docker-hub-creds')
     DOCKER_NAMESPACE = 'reabaln'
     SERVICE_NAME = 'project-assessment-site'
-    TOKEN=credentials('a1e6b226-8406-44c6-8169-6fc4679fa16d')
+    TOKEN=credentials('56c19c7f-20fa-4660-adca-fe3ab11095da')
   }
   stages {
       stage("Build") {
