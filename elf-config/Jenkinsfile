@@ -60,6 +60,8 @@ spec:
                   container('helm') {
 		      // https://dev.to/sword-health/seamless-ci-cd-with-jenkins-helm-and-kubernetes-5e00
                       sh '''
+                        helm -h
+    			
   			helm repo add elastic https://helm.elastic.co
 			helm repo add fluent https://fluent.github.io/helm-charts
 			helm repo update
