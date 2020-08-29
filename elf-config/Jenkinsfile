@@ -24,9 +24,9 @@ spec:
     hostPath:
       path: /var/run/docker.sock  
       type: Socket
-
   - name: helm
     image: alpine/helm
+    command:
     - cat
     tty: true
 
