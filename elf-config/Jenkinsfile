@@ -30,15 +30,15 @@ spec:
           steps {
               container('kubectl') {
                   sh '''
-		      ls -Alth 
+		      #ls -Alth 
                       cd elf-config
-		      ls -Alth 
+		      #ls -Alth 
 
                       kubectl --token=$TOKEN -n test get all
 		      kubectl --token=$TOKEN apply -f elf.namespace.yaml
-		      kubectl get ns
+		      #kubectl get namespace
                       kubectl --token=$TOKEN apply -f service.yaml -n elf
-		      kubectl get svc -n elf
+		      #kubectl get svc -n elf
                       kubectl --token=$TOKEN -n test get all
                   '''
               }
