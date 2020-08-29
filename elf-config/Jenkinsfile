@@ -6,17 +6,34 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
+  - name: dnd
+    image: docker:latest
+    command: 
+    - cat
+    tty: true
+    volumeMounts: 
+    - mountPath: /var/run/docker.sock
+      name: docker-sock
   - name: kubectl
     image: bryandollery/terraform-packer-aws-alpine
     command:
     - cat
     tty: true
+  volumes:
+  - name: docker-sock
+    hostPath:
+      path: /var/run/docker.sock  
+      type: Socket
   - name: helm
     image: alpine/helm
     command:
     - bash
     tty: true
-
+  volumes:
+  - name: docker-sock
+    hostPath:
+      path: /var/run/docker.sock  
+      type: Socket
 """
     }
   }
@@ -51,6 +68,9 @@ spec:
                   container('helm') {
 		      // https://dev.to/sword-health/seamless-ci-cd-with-jenkins-helm-and-kubernetes-5e00
                       sh '''
+                        pwd
+			whoami
+			helm -h
   			helm repo add elastic https://helm.elastic.co
 			helm repo add fluent https://fluent.github.io/helm-charts
 			helm repo update
