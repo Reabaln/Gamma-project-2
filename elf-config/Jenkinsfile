@@ -44,7 +44,10 @@ spec:
           steps {
               container('kubectl') {
                   sh '''
-                      cd $SERVICE_NAME
+		      ls -Alth 
+                      cd elf-config
+		      ls -Alth 
+
                       kubectl --token=$TOKEN -n test get all
                       kubectl --token=$TOKEN -n test apply -f  elf.namespace.yaml  -f service.yaml
                       kubectl --token=$TOKEN -n test get all
@@ -73,16 +76,6 @@ spec:
         }
 
 
-       stage("random-logger") {
-          steps {
-              container('kubectl') {
-                  sh '''
-                      cd $SERVICE_NAME
-                      kubectl --token=$TOKEN -n test run random-logger --image=chentex/random-logger
-                  '''
-              }
-          }
-      }
     }
 }
 
