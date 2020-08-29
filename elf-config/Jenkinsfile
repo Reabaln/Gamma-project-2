@@ -38,6 +38,8 @@ spec:
           steps {
               container('kubectl') {
                   sh '''
+		      ls -Alth
+		      pwd
                       cd $SERVICE_NAME
                       kubectl --token=$TOKEN -n test get all
                       kubectl --token=$TOKEN -n test apply -f  elf.namespace.yaml  -f service.yaml
