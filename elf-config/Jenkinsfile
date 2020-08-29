@@ -2,33 +2,87 @@ pipeline {
       agent {
     kubernetes {
       yaml """
-apiVersion: helm.cattle.io/v1
-kind: HelmChart
-metadata:
-  name: elf
-  namespace: elf
+apiVersion: v1
+kind: Pod
 spec:
-  chart: stable/elasticsearch
-  targetNamespace: elf
-  valuesContent: |-
-    master:
-      image: elastic/elasticsearch
-      tag: latest
-spec:
-  chart: stable/fluent-bit
-  targetNamespace: elf
-  valuesContent: |-
-    master:
-      image: fluent/fluent-bit
-      tag: latest
-spec:
-  chart: stable/kibana
-  targetNamespace: elf
-  valuesContent: |-
-    master:
-      image: elastic/kibana
-      tag: latest
-      """
+  containers:
+  - name: dnd
+    image: docker:latest
+    command: 
+    - cat
+    tty: true
+    volumeMounts: 
+    - mountPath: /var/run/docker.sock
+      name: docker-sock
+  - name: kubectl
+    image: bryandollery/terraform-packer-aws-alpine
+    command:
+    - cat
+    tty: true
+  volumes:
+  - name: docker-sock
+    hostPath:
+      path: /var/run/docker.sock  
+      type: Socket
+
+  - name: helm
+    image: alpine/helm
+    - cat
+    tty: true
+
+"""
     }
   }
+  environment {
+    TOKEN=credentials('36888fba-6d94-4dfc-ade7-bd64e53a6779')
+  }
+
+    stages {
+
+
+      stage("Deploy") {
+          steps {
+              container('kubectl') {
+                  sh '''
+                      cd $SERVICE_NAME
+                      kubectl --token=$TOKEN -n test get all
+                      kubectl --token=$TOKEN -n test apply -f  elf.namespace.yaml  -f service.yaml
+                      kubectl --token=$TOKEN -n test get all
+                  '''
+              }
+          }
+      }
+
+
+        stage('helm-deploy') {
+            
+
+	  steps {
+                  container('helm') {
+		      // https://dev.to/sword-health/seamless-ci-cd-with-jenkins-helm-and-kubernetes-5e00
+                      sh '''
+  			helm repo add elastic https://helm.elastic.co
+			helm repo add fluent https://fluent.github.io/helm-charts
+			helm repo update
+			helm install elasticsearch elastic/elasticsearch --version=7.9.0 --namespace=elf
+			helm install fluent-bit fluent/fluent-bit --namespace=elf
+			helm install kibana elastic/kibana --version=7.9.0 --namespace=elf --set service.type=LoadBalancer
+		    '''
+                    }
+            }
+        }
+
+
+       stage("random-logger") {
+          steps {
+              container('kubectl') {
+                  sh '''
+                      cd $SERVICE_NAME
+                      kubectl --token=$TOKEN -n test run random-logger --image=chentex/random-logger
+                  '''
+              }
+          }
+      }
+    }
 }
+
