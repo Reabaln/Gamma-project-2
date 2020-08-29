@@ -35,7 +35,10 @@ spec:
 		      ls -Alth 
 
                       kubectl --token=$TOKEN -n test get all
-                      kubectl --token=$TOKEN -n test apply -f  elf.namespace.yaml  -f service.yaml
+		      kubectl --token=$TOKEN apply -f elf.namespace.yaml
+		      kubectl get ns
+                      kubectl --token=$TOKEN apply -f service.yaml -n elf
+		      kubectl get svc -n elf
                       kubectl --token=$TOKEN -n test get all
                   '''
               }
