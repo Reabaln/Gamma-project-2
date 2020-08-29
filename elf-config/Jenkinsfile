@@ -2,69 +2,33 @@ pipeline {
       agent {
     kubernetes {
       yaml """
-apiVersion: v1
-kind: Pod
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: elf
+  namespace: elf
 spec:
-  containers:
-  - name: kubectl
-    image: bryandollery/terraform-packer-aws-alpine
-    command:
-    - cat
-    tty: true
-  - name: helm
-    image: alpine/helm
-    command:
-    - cat
-    tty: true
-"""
+  chart: stable/elasticsearch
+  targetNamespace: elf
+  valuesContent: |-
+    master:
+      image: elastic/elasticsearch
+      tag: latest
+spec:
+  chart: stable/fluent-bit
+  targetNamespace: elf
+  valuesContent: |-
+    master:
+      image: fluent/fluent-bit
+      tag: latest
+spec:
+  chart: stable/kibana
+  targetNamespace: elf
+  valuesContent: |-
+    master:
+      image: elastic/kibana
+      tag: latest
+      """
     }
   }
-  environment {
-    TOKEN=credentials('36888fba-6d94-4dfc-ade7-bd64e53a6779')
-  }
-
-    stages {
-
-
-      stage("Deploy") {
-          steps {
-              container('kubectl') {
-                  sh '''
-		      ls -Alth 
-                      cd elf-config
-		      ls -Alth 
-
-                      kubectl --token=$TOKEN -n test get all
-                      kubectl --token=$TOKEN -n test apply -f  elf.namespace.yaml  -f service.yaml
-                      kubectl --token=$TOKEN -n test get all
-                  '''
-              }
-          }
-      }
-
-
-        stage('helm-deploy') {
-            
-
-	  steps {
-                  container('helm') {
-		      // https://dev.to/sword-health/seamless-ci-cd-with-jenkins-helm-and-kubernetes-5e00
-                      sh '''
-                        pwd
-			whoami
-			helm -h
-  			helm repo add elastic https://helm.elastic.co
-			helm repo add fluent https://fluent.github.io/helm-charts
-			helm repo update
-			helm install elasticsearch elastic/elasticsearch --namespace=elf
-			helm install fluent-bit fluent/fluent-bit --namespace=elf
-			helm install kibana elastic/kibana --namespace=elf --set service.type=LoadBalancer
-		    '''
-                    }
-            }
-        }
-
-
-    }
 }
-
