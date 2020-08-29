@@ -48,7 +48,6 @@ spec:
 
 	  steps {
                   container('helm') {
-		      // https://dev.to/sword-health/seamless-ci-cd-with-jenkins-helm-and-kubernetes-5e00
                       sh '''
                         pwd
 			whoami
