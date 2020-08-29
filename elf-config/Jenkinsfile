@@ -15,7 +15,6 @@ spec:
     image: alpine/helm
     command:
     - cat
-    tty: true
 """
     }
   }
