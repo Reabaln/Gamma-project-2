@@ -4,10 +4,6 @@ pipeline {
       yaml """
 apiVersion: v1
 kind: Pod
-metadata:
-  labels:
-    service_name: project-assessment-site
-    service_type: REST
 spec:
   containers:
   - name: dnd
@@ -32,7 +28,7 @@ spec:
     }
   }
   environment {
-    TOKEN=credentials('56c19c7f-20fa-4660-adca-fe3ab11095da')
+    TOKEN=credentials('36888fba-6d94-4dfc-ade7-bd64e53a6779')
   }
 
     stages {
