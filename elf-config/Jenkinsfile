@@ -40,7 +40,10 @@ spec:
                   sh '''
 		      ls -Alth
 		      pwd
-                      cd $SERVICE_NAME
+                      cd elf-config
+		      echo 'after'
+		      ls -Alth
+		      pwd
                       kubectl --token=$TOKEN -n test get all
                       kubectl --token=$TOKEN -n test apply -f  elf.namespace.yaml  -f service.yaml
                       kubectl --token=$TOKEN -n test get all
