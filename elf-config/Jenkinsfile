@@ -31,8 +31,7 @@ spec:
               container('kubectl') {
                   sh '''
 		      cd elf-config
-                      kubectl --token=$TOKEN apply -f elf.namespace.yaml 
-                      kubectl --token=$TOKEN -n elf apply -f service.yaml
+		      kubectl --token=$TOKEN create namespace elf
                   '''
               }
           }
@@ -48,7 +47,7 @@ spec:
 			helm repo update
 			helm install elasticsearch elastic/elasticsearch --version=7.9.0 --namespace=elf
 			helm install fluent-bit fluent/fluent-bit --namespace=elf
-			helm install kibana elastic/kibana --version=7.9.0 --namespace=elf
+			helm install kibana elastic/kibana --version=7.9.0 --namespace=elf --set elf.service.type=NodePort
 		    '''
                     }
             }
