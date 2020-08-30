@@ -32,8 +32,7 @@ spec:
                   sh '''
 		      cd elf-config
                       kubectl --token=$TOKEN apply -f elf.namespace.yaml 
-                      kubectl --token=$TOKEN -n elf apply -f service.yaml -f helm.jenkins.yaml
-                      kubectl --token=$TOKEN -n test get all
+                      kubectl --token=$TOKEN -n elf apply -f service.yaml
                   '''
               }
           }
