@@ -23,7 +23,17 @@ spec:
     TOKEN=credentials('cffc1cc9-775e-4507-86b8-54433e85e3ae')
   }
   stages {
-      stage("Install") {
+      stage("Deploy") {
+          steps {
+              container('kubectl') {
+                  sh '''
+                      cd pro-graf-config
+                      kubectl --token=$TOKEN create namespace monitor
+                      kubectl --token=$TOKEN -n monitor apply -f service.yaml
+                  '''
+              }
+          }
+      }stage("Install") {
           steps {
               container('helm') {
                   sh '''
@@ -37,5 +47,6 @@ spec:
               }
           }
       }
+	  
 }
 }
