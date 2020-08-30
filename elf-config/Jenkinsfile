@@ -30,7 +30,6 @@ spec:
           steps {
               container('kubectl') {
                   sh '''
-		      cd elf-config
 		      kubectl --token=$TOKEN create namespace elf
                   '''
               }
