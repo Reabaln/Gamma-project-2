@@ -22,6 +22,7 @@ spec:
   environment {
     TOKEN=credentials('cffc1cc9-775e-4507-86b8-54433e85e3ae')
   }
+	
   stages {
       stage("Deploy") {
           steps {
@@ -33,7 +34,9 @@ spec:
                   '''
               }
           }
-      }stage("Install") {
+      }
+	  
+      stage("Install") {
           steps {
               container('helm') {
                   sh '''
@@ -41,9 +44,8 @@ spec:
 			helm repo update
 			kubectl create namespace monitor
 			helm install prometheus-operator stable/prometheus-operator --namespace monitor --set grafana.service.type=NodePort
-			#kubectl apply -f ingress.yaml -n monitor
-			
                   '''
+		      //kubectl apply -f ingress.yaml -n monitor
               }
           }
       }
