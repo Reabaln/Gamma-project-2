@@ -31,6 +31,8 @@ spec:
                       cd pro-graf-config
                       kubectl --token=$TOKEN create namespace monitor
                       kubectl --token=$TOKEN -n monitor apply -f service.yaml
+  		      kubectl create namespace monitor
+
                   '''
               }
           }
@@ -42,7 +44,6 @@ spec:
                   sh '''
 			helm repo add stable https://kubernetes-charts.storage.googleapis.com
 			helm repo update
-			kubectl create namespace monitor
 			helm install prometheus-operator stable/prometheus-operator --namespace monitor --set grafana.service.type=NodePort
                   '''
 		      //kubectl apply -f ingress.yaml -n monitor
