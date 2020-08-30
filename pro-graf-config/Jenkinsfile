@@ -31,8 +31,6 @@ spec:
                       cd pro-graf-config
                       kubectl --token=$TOKEN create namespace monitor
                       kubectl --token=$TOKEN -n monitor apply -f service.yaml
-  		      kubectl create namespace monitor
-
                   '''
               }
           }
