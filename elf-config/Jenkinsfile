@@ -20,7 +20,7 @@ spec:
     }
   }
   environment {
-    TOKEN=credentials('6abf5f44-702a-4034-981f-773a1a5040b8')
+    TOKEN=credentials('')
   }
 
     stages {
@@ -28,9 +28,7 @@ spec:
           steps {
               container('kubectl') {
                   sh '''
-		      cd elf-config
 		      kubectl --token=$TOKEN create namespace elf
-		      kubectl --token=$TOKEN -n elf apply -f service.yaml
                   '''
               }
           }
@@ -44,7 +42,7 @@ spec:
 			helm repo update
 			helm install elasticsearch elastic/elasticsearch --version=7.9.0 --namespace=elf
 			helm install fluent-bit fluent/fluent-bit --namespace=elf
-			helm install kibana elastic/kibana --version=7.9.0 --namespace=elf --set elf.service.type=NodePort
+			helm install kibana elastic/kibana --version=7.9.0 --namespace=elf --set service.type=NodePort
 		    '''
                     }
             }
