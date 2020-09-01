@@ -5,4 +5,4 @@ Designed to run in a node container
 
 Expose http service endpoint on port 80 with the /department/ context path
 
-eg:  http://{host}/department/
+eg.  http://{host}/department/
