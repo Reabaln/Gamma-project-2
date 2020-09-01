@@ -39,6 +39,9 @@ spec:
   }
   stages {
       stage("Build") {
+            when {
+                changeset "**/department-service/*.*"
+            }
           steps {
               container('dnd') {
                   sh '''
