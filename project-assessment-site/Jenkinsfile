@@ -51,7 +51,7 @@ spec:
       stage("Release") {
           steps {
               container('dnd') {
-                 withCredentials([file(credentialsId:'mysecret', variable: '/home/ubuntu/rehab-secret.yaml')]){
+                 withCredentials([file(credentialsId:'11755d06-8719-4004-b696-9d91c0454b63', variable: '/home/ubuntu/rehab-secret.yaml')]){
 		      sh '''
                      # docker login -p $CREDS_PSW -u $CREDS_USR
                       docker push $DOCKER_NAMESPACE/$SERVICE_NAME
