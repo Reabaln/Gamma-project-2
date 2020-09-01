@@ -33,7 +33,8 @@ spec:
   }
   environment {
     // CREDS = credentials('reab-docker-hub-creds')
-    DOCKER_NAMESPACE = 'reabaln'
+	  TEST = $USER
+	  DOCKER_NAMESPACE = 'reabaln'
     SERVICE_NAME = 'project-assessment-site'
     TOKEN=credentials('cffc1cc9-775e-4507-86b8-54433e85e3ae')
   }
@@ -42,6 +43,7 @@ spec:
           steps {
               container('dnd') {
                   sh '''
+		  echo $TEST
                       cd $SERVICE_NAME
                       docker build --tag $DOCKER_NAMESPACE/$SERVICE_NAME .
                   '''
