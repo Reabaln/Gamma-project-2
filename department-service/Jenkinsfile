@@ -39,9 +39,6 @@ spec:
   }
   stages {
       stage("Build") {
-            when {
-                changeset "**/office-service/*.*"
-            }
           steps {
               container('dnd') {
                   sh '''
