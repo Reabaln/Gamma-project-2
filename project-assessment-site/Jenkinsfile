@@ -32,14 +32,8 @@ spec:
     }
   }
   environment {
-<<<<<<< HEAD
     CREDS = credentials('reab-docker-hub-creds')
     DOCKER_NAMESPACE = 'reabaln'
-=======
-    // CREDS = credentials('reab-docker-hub-creds')
-	  TEST = $USER
-	  DOCKER_NAMESPACE = 'reabaln'
->>>>>>> e3e29b79037b9b195a776c094546621f09d3bc46
     SERVICE_NAME = 'project-assessment-site'
     TOKEN=credentials('cffc1cc9-775e-4507-86b8-54433e85e3ae')
   }
@@ -58,10 +52,6 @@ spec:
       stage("Release") {
           steps {
               container('dnd') {
-<<<<<<< HEAD
-=======
-                 withCredentials([file(credentialsId:'11755d06-8719-4004-b696-9d91c0454b63', variable: '/home/ubuntu/rehab-secret.yaml')]){
->>>>>>> e3e29b79037b9b195a776c094546621f09d3bc46
 		      sh '''
                      docker login -p $CREDS_PSW -u $CREDS_USR
                       docker push $DOCKER_NAMESPACE/$SERVICE_NAME
