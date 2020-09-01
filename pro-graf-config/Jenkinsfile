@@ -24,6 +24,7 @@ spec:
   }
 	
   stages {
+
       stage("Deploy") {
           steps {
               container('kubectl') {
@@ -34,7 +35,7 @@ spec:
               }
           }
       }
-	  
+
       stage("Install") {
           steps {
               container('helm') {
