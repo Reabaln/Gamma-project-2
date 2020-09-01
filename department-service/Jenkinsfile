@@ -38,7 +38,7 @@ spec:
     TOKEN=credentials('cffc1cc9-775e-4507-86b8-54433e85e3ae')
   }
 stages {
-  stage { 
+  stage ('test'){ 
         when {
                 changeset "**/$SERVICE_NAME/*.*"
             }
