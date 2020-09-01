@@ -42,7 +42,6 @@ spec:
           steps {
               container('dnd') {
                   sh '''
-		  echo $TEST
                       cd $SERVICE_NAME
                       docker build --tag $DOCKER_NAMESPACE/$SERVICE_NAME .
                   '''
