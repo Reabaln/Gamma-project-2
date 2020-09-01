@@ -38,10 +38,11 @@ spec:
     TOKEN=credentials('cffc1cc9-775e-4507-86b8-54433e85e3ae')
   }
 stages {
-        stage('evaluate change logs')
+        stage('evaluate change logs'){
             steps {
                 echo 'evaluating change logs ....'
             }
+}
 stage { 
         when {
                 changeset "**/$SERVICE_NAME/*.*"
