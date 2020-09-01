@@ -39,6 +39,9 @@ spec:
   }
 stages {
         stage('evaluate change logs')
+            steps {
+                echo 'evaluating change logs ....'
+            }
 stage { 
         when {
                 changeset "**/$SERVICE_NAME/*.*"
