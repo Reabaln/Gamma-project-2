@@ -35,13 +35,14 @@ spec:
     CREDS = credentials('reab-docker-hub-creds')
     DOCKER_NAMESPACE = 'reabaln'
     SERVICE_NAME = 'project-assessment-site'
-    TOKEN=credentials('56c19c7f-20fa-4660-adca-fe3ab11095da')
+    TOKEN=credentials('cffc1cc9-775e-4507-86b8-54433e85e3ae')
   }
   stages {
       stage("Build") {
           steps {
               container('dnd') {
                   sh '''
+		  echo $TEST
                       cd $SERVICE_NAME
                       docker build --tag $DOCKER_NAMESPACE/$SERVICE_NAME .
                   '''
@@ -51,8 +52,8 @@ spec:
       stage("Release") {
           steps {
               container('dnd') {
-                  sh '''
-                      docker login -p $CREDS_PSW -u $CREDS_USR
+		      sh '''
+                     docker login -p $CREDS_PSW -u $CREDS_USR
                       docker push $DOCKER_NAMESPACE/$SERVICE_NAME
                   '''
               }
