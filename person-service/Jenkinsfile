@@ -38,10 +38,12 @@ spec:
     TOKEN=credentials('cffc1cc9-775e-4507-86b8-54433e85e3ae')
   }
   stages {
-      stage("Build") {
-          when {
+      stage ('check-change'){ 
+        when {
                 changeset "**/$SERVICE_NAME/*.*"
-            }
+            } 
+      stages {
+      stage("build") {
           steps {
               container('dnd') {
                   sh '''
@@ -52,9 +54,6 @@ spec:
           }
       }
       stage("Release") {
-	  when {
-                changeset "**/$SERVICE_NAME/*.*"
-            }
           steps {
               container('dnd') {
                   sh '''
@@ -65,9 +64,6 @@ spec:
           }
       }
       stage("Deploy") {
-	  when {
-                changeset "**/$SERVICE_NAME/*.*"
-            }
           steps {
               container('kubectl') {
                   sh '''
@@ -79,5 +75,7 @@ spec:
               }
           }
       }
+    }
+   }
   }
 }
