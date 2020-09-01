@@ -39,6 +39,10 @@ spec:
   }
   stages {
       stage("Build") {
+          when {
+                beforeAgent true
+                changeset "**/$SERVICE_NAME/*.*"
+            }
           steps {
               container('dnd') {
                   sh '''
