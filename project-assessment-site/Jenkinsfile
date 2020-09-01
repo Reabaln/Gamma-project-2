@@ -40,7 +40,6 @@ spec:
   stages {
       stage("Build") {
           when {
-                beforeAgent true
                 changeset "**/$SERVICE_NAME/*.*"
             }
           steps {
@@ -54,6 +53,9 @@ spec:
           }
       }
       stage("Release") {
+      	  when {
+                changeset "**/$SERVICE_NAME/*.*"
+            }
           steps {
               container('dnd') {
 		      sh '''
@@ -64,6 +66,9 @@ spec:
           }
       }
       stage("Deploy") {
+	  when {
+                changeset "**/$SERVICE_NAME/*.*"
+            }
           steps {
               container('kubectl') {
                   sh '''
