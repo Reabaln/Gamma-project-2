@@ -1,4 +1,6 @@
-## A nodejs REST service to return departments
+## A nodejs REST service to return departments 
+
+Gamma Team
 
 Designed to run in a node:lts-alpine3.10 container
 
