@@ -35,10 +35,15 @@ spec:
     CREDS = credentials('reab-docker-hub-creds')
     DOCKER_NAMESPACE = 'reabaln'
     SERVICE_NAME = 'person-service'
-    TOKEN=credentials('a1e6b226-8406-44c6-8169-6fc4679fa16d')
+    TOKEN=credentials('cffc1cc9-775e-4507-86b8-54433e85e3ae')
   }
   stages {
-      stage("Build") {
+      stage ('check-change'){ 
+        when {
+                changeset "**/$SERVICE_NAME/*.*"
+            } 
+      stages {
+      stage("build") {
           steps {
               container('dnd') {
                   sh '''
@@ -70,5 +75,7 @@ spec:
               }
           }
       }
+    }
+   }
   }
 }
