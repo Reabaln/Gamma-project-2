@@ -36,6 +36,7 @@ spec:
     DOCKER_NAMESPACE = 'reabaln'
     SERVICE_NAME = 'project-assessment-site'
     TOKEN=credentials('cffc1cc9-775e-4507-86b8-54433e85e3ae')
+
   }
   stages {
       stage ('check-change'){ 
